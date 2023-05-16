@@ -1,41 +1,144 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { FaComment } from "react-icons/fa";
-import DetailsModal from './DetailsModal';
-
+import { Link } from "react-router-dom";
 
 const Main = () => {
-    const [showDetails, setShowDetails] = useState(false); // Details를 보여줄지 말지를 결정하는 state를 추가
-    const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지를 저장하는 state를 추가
-
-    const handlePostClick = (image) => { // Post를 클릭했을 때의 핸들러를 추가
-        setSelectedImage(image);
-        setShowDetails(true);
-    };
-
     return (
         <>
             <MainContainer>
                 <MainWrap>
-                    {[...Array(9).keys()].map(i => (
-                        <PostFrame onClick={() => handlePostClick(`/example0${i+1}.jpg`)}>
-                            <Photo src={process.env.PUBLIC_URL + `/example0${i+1}.jpg`} alt="" />
+                    <Link to={`/details/1`}>
+                        <PostFrame>
+                            <Photo src={process.env.PUBLIC_URL + "/example01.jpg"} alt="" />
                             <PostInfo>
                                 <PostText className="likes">
                                     <PostHeartIcon />
                                     1.9만
                                 </PostText>
+                                {/* <span className="likes"><IoMdHeartEmpty /></span> */}
                                 <PostText className="comment">
                                     <PostCommentIcon />
                                     95
                                 </PostText>
                             </PostInfo>
                         </PostFrame>
-                    ))}
+                    </Link>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example02.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example03.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example04.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example05.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example06.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example07.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example08.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
+                    <PostFrame>
+                        <Photo src={process.env.PUBLIC_URL + "/example09.jpg"} alt="" />
+                        <PostInfo>
+                            <PostText className="likes">
+                                <PostHeartIcon />
+                                1.9만
+                            </PostText>
+                            {/* <span className="likes"><IoMdHeartEmpty /></span> */}
+                            <PostText className="comment">
+                                <PostCommentIcon />
+                                95
+                            </PostText>
+                        </PostInfo>
+                    </PostFrame>
                 </MainWrap>
             </MainContainer>
-            {showDetails && <DetailsModal image={selectedImage} onClose={() => setShowDetails(false)} />}
         </>
     );
 };
