@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 import { FaComment } from "react-icons/fa";
 import DetailsModal from './DetailsModal';
 
@@ -43,7 +43,7 @@ const Main = () => {
 export default Main;
 
 const MainContainer = styled.div`
-    margin-top: 100px;
+    margin-top: 110px;
 `;
 const MainWrap = styled.div`
     display: grid;
@@ -51,36 +51,43 @@ const MainWrap = styled.div`
     row-gap: 5px;
     column-gap: 5px;
 `;
-const PostInfo = styled.div`
+const PostInfoWrap = styled.div`
     display: none;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     color: #fff;
     font-weight: 800;
     text-align: center;
-    line-height: 23rem;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 22.27%);
 `;
 const PostFrame = styled.div`
     position: relative;
-    &:hover ${PostInfo} {
+    &:hover ${PostInfoWrap} {
         display: block;
     }
 `;
+const PostInfo = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 const PostHeartIcon = styled(IoMdHeart)`
     font-size: 1.5rem;
     margin-right: 5px;
 `;
 const PostCommentIcon = styled(FaComment)`
     font-size: 1.5rem;
-    margin: 0 5px 0 20px;
+    margin-left: 1.7rem;
+    margin-right: 5px;
 `;
 const PostText = styled.span`
     font-size: 1rem;
+    display: flex;
 `;
 const Photo = styled.img`
     height: 360px;
