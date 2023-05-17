@@ -1,5 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
+import {Outlet} from "react-router-dom"
 import Header from "./Header";
 import Footer from "./Footer";
 import Nav from "./Nav";
@@ -11,8 +12,11 @@ const Layout = ({ children }) => {
             <GlobalStyle />
             <Header />
             <Nav />
-            <LayoutContainer>
-                <Wrapper>{children}</Wrapper>
+            <LayoutContainer>               
+                <Wrapper>
+                    <Outlet/>
+                    {children}
+                </Wrapper>
                 <Footer />
             </LayoutContainer>
         </>
@@ -26,7 +30,7 @@ const LayoutContainer = styled.div`
     width: 100%;
     min-height: 100vh;
     margin: 0 auto;
-    /* transform: translate(122px); */
+    transform: translate(122px);
 `;
 const Wrapper = styled.div`
     overflow-y: visible;

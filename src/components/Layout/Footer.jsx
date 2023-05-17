@@ -16,7 +16,7 @@ export default Footer;
 
 const StFooterWrap = styled.div`
     text-align: center;
-    padding: 30px;
+    padding: 70px 0 30px;
 `;
 const StFooterContents = styled.p`
     color: gray;
