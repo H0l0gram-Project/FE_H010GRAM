@@ -30,6 +30,10 @@ const Nav = () => {
         navigate("/");
     };
 
+    const profilePhoto = () => {
+        
+    }
+
     return (
         <>
             {modalOpen && <PostModalLayout setModalOpen={setModalOpen} />}

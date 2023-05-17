@@ -2,37 +2,60 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import { IoMdHeart } from "react-icons/io";
 import { FaComment } from "react-icons/fa";
-import DetailsModal from './DetailsModal';
-
+import DetailsModal from "./DetailsModal";
+import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getPosts } from "../api/post";
+import ErrorStatus from "../components/StatusComponents/ErrorStatus";
+import LoadingStatus from "../components/StatusComponents/LoadingStatus";
 
 const Main = () => {
     const [showDetails, setShowDetails] = useState(false); // Details를 보여줄지 말지를 결정하는 state를 추가
     const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지를 저장하는 state를 추가
 
-    const handlePostClick = (image) => { // Post를 클릭했을 때의 핸들러를 추가
+    const handlePostClick = (image) => {
+        // Post를 클릭했을 때의 핸들러를 추가
         setSelectedImage(image);
         setShowDetails(true);
     };
+
+    const { isLoading, isError, data } = useQuery("posts", getPosts);
+
+    // console.log(data);
+
+    if (isLoading) {
+        return <LoadingStatus />;
+    }
+    if (isError) {
+        return <ErrorStatus />;
+    }
 
     return (
         <>
             <MainContainer>
                 <MainWrap>
-                    {[...Array(9).keys()].map(i => (
-                        <PostFrame onClick={() => handlePostClick(`/example0${i+1}.jpg`)}>
-                            <Photo src={process.env.PUBLIC_URL + `/example0${i+1}.jpg`} alt="" />
-                            <PostInfo>
-                                <PostText className="likes">
-                                    <PostHeartIcon />
-                                    1.9만
-                                </PostText>
-                                <PostText className="comment">
-                                    <PostCommentIcon />
-                                    95
-                                </PostText>
-                            </PostInfo>
-                        </PostFrame>
-                    ))}
+                    {data.data.data &&
+                        data.data.data.map((post) => {
+                            return (
+                                <Link to={`/details/${post.id}`} key={post.id}>
+                                    <PostFrame onClick={() => handlePostClick(post.postImage)}>
+                                        <Photo src={post.postImage} alt="포스트이미지" />
+                                        <PostInfoWrap>
+                                            <PostInfo>
+                                                <PostText className="likes">
+                                                    <PostHeartIcon />
+                                                    {post.liked}
+                                                </PostText>
+                                                <PostText className="comment">
+                                                    <PostCommentIcon />
+                                                    {post.commentsCount}
+                                                </PostText>
+                                            </PostInfo>
+                                        </PostInfoWrap>
+                                    </PostFrame>
+                                </Link>
+                            );
+                        })}
                 </MainWrap>
             </MainContainer>
             {showDetails && <DetailsModal image={selectedImage} onClose={() => setShowDetails(false)} />}
@@ -75,7 +98,7 @@ const PostInfo = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 const PostHeartIcon = styled(IoMdHeart)`
     font-size: 1.5rem;
     margin-right: 5px;

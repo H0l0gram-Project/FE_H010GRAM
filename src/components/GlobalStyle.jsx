@@ -9,7 +9,7 @@ li{list-style: none;}
 a{text-decoration: none; color: inherit;}
 img{border: 0; vertical-align: middle;}
 fieldset{border: none;}
-input, select, button, textarea{vertical-align: middle;}
+input, select, button, textarea{vertical-align: middle; outline:none;}
 button, input[type=button], input[type=image]{cursor: pointer;}
 table{border-collapse: collapse;}
 caption{text-indent: -9999px; height: 0; overflow: hidden; font-size: 0;} 
