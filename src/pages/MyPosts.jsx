@@ -5,7 +5,6 @@ import { FaComment } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const MyPosts = () => {
-    
     return (
         <>
             <MainContainer>
@@ -15,8 +14,14 @@ const MyPosts = () => {
                             <Photo src={process.env.PUBLIC_URL + "/example01.jpg"} alt="" />
                             <PostInfoWrap>
                                 <PostInfo>
-                                <PostText><PostHeartIcon />19.5만</PostText>
-                                <PostText><PostCommentIcon />95</PostText>
+                                    <PostText>
+                                        <PostHeartIcon />
+                                        19.5만
+                                    </PostText>
+                                    <PostText>
+                                        <PostCommentIcon />
+                                        95
+                                    </PostText>
                                 </PostInfo>
                             </PostInfoWrap>
                         </PostFrame>
@@ -26,8 +31,14 @@ const MyPosts = () => {
                             <Photo src={process.env.PUBLIC_URL + "/example02.jpg"} alt="" />
                             <PostInfoWrap>
                                 <PostInfo>
-                                <PostText><PostHeartIcon />19.5만</PostText>
-                                <PostText><PostCommentIcon />95</PostText>
+                                    <PostText>
+                                        <PostHeartIcon />
+                                        19.5만
+                                    </PostText>
+                                    <PostText>
+                                        <PostCommentIcon />
+                                        95
+                                    </PostText>
                                 </PostInfo>
                             </PostInfoWrap>
                         </PostFrame>
@@ -37,8 +48,14 @@ const MyPosts = () => {
                             <Photo src={process.env.PUBLIC_URL + "/example03.jpg"} alt="" />
                             <PostInfoWrap>
                                 <PostInfo>
-                                <PostText><PostHeartIcon />19.5만</PostText>
-                                <PostText><PostCommentIcon />95</PostText>
+                                    <PostText>
+                                        <PostHeartIcon />
+                                        19.5만
+                                    </PostText>
+                                    <PostText>
+                                        <PostCommentIcon />
+                                        95
+                                    </PostText>
                                 </PostInfo>
                             </PostInfoWrap>
                         </PostFrame>
@@ -48,8 +65,14 @@ const MyPosts = () => {
                             <Photo src={process.env.PUBLIC_URL + "/example04.jpg"} alt="" />
                             <PostInfoWrap>
                                 <PostInfo>
-                                <PostText><PostHeartIcon />19.5만</PostText>
-                                <PostText><PostCommentIcon />95</PostText>
+                                    <PostText>
+                                        <PostHeartIcon />
+                                        19.5만
+                                    </PostText>
+                                    <PostText>
+                                        <PostCommentIcon />
+                                        95
+                                    </PostText>
                                 </PostInfo>
                             </PostInfoWrap>
                         </PostFrame>
@@ -59,8 +82,14 @@ const MyPosts = () => {
                             <Photo src={process.env.PUBLIC_URL + "/example05.jpg"} alt="" />
                             <PostInfoWrap>
                                 <PostInfo>
-                                <PostText><PostHeartIcon />19.5만</PostText>
-                                <PostText><PostCommentIcon />95</PostText>
+                                    <PostText>
+                                        <PostHeartIcon />
+                                        19.5만
+                                    </PostText>
+                                    <PostText>
+                                        <PostCommentIcon />
+                                        95
+                                    </PostText>
                                 </PostInfo>
                             </PostInfoWrap>
                         </PostFrame>
@@ -70,8 +99,14 @@ const MyPosts = () => {
                             <Photo src={process.env.PUBLIC_URL + "/example06.jpg"} alt="" />
                             <PostInfoWrap>
                                 <PostInfo>
-                                <PostText><PostHeartIcon />19.5만</PostText>
-                                <PostText><PostCommentIcon />95</PostText>
+                                    <PostText>
+                                        <PostHeartIcon />
+                                        19.5만
+                                    </PostText>
+                                    <PostText>
+                                        <PostCommentIcon />
+                                        95
+                                    </PostText>
                                 </PostInfo>
                             </PostInfoWrap>
                         </PostFrame>
@@ -117,7 +152,7 @@ const PostInfo = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 const PostHeartIcon = styled(IoMdHeart)`
     font-size: 1.5rem;
     margin-right: 5px;

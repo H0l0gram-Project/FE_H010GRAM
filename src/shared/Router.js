@@ -8,6 +8,7 @@ import Signup from '../pages/Signup'
 import MyPosts from '../pages/MyPosts'
 
 const Router = () => {
+  
   return (
     <BrowserRouter>
 
