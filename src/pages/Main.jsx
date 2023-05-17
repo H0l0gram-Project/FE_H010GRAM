@@ -3,30 +3,29 @@ import { styled } from "styled-components";
 import { IoMdHeart } from "react-icons/io";
 import { FaComment } from "react-icons/fa";
 import DetailsModal from "./DetailsModal";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getPosts } from "../api/post";
 import ErrorStatus from "../components/StatusComponents/ErrorStatus";
 import LoadingStatus from "../components/StatusComponents/LoadingStatus";
 
 const Main = () => {
-    const [showDetails, setShowDetails] = useState(false); // Details를 보여줄지 말지를 결정하는 state를 추가
-    const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지를 저장하는 state를 추가
+    const navigate = useNavigate();
+    const [showDetails, setShowDetails] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
 
-    const handlePostClick = (image) => {
-        // Post를 클릭했을 때의 핸들러를 추가
-        setSelectedImage(image);
+    const handlePostClick = (event, post) => {
+        event.preventDefault();
+        setSelectedPost(post);
         setShowDetails(true);
     };
 
     const { isLoading, isError, data } = useQuery("posts", getPosts);
 
-    // console.log(data);
-
     if (isLoading) {
         return <LoadingStatus />;
     }
-    if (isError) {
+    if (isError || !data || !data.data || !data.data.data) {
         return <ErrorStatus />;
     }
 
@@ -34,31 +33,30 @@ const Main = () => {
         <>
             <MainContainer>
                 <MainWrap>
-                    {data.data.data &&
-                        data.data.data.map((post) => {
-                            return (
-                                <Link to={`/details/${post.id}`} key={post.id}>
-                                    <PostFrame onClick={() => handlePostClick(post.postImage)}>
-                                        <Photo src={post.postImage} alt="포스트이미지" />
-                                        <PostInfoWrap>
-                                            <PostInfo>
-                                                <PostText className="likes">
-                                                    <PostHeartIcon />
-                                                    {post.liked}
-                                                </PostText>
-                                                <PostText className="comment">
-                                                    <PostCommentIcon />
-                                                    {post.commentsCount}
-                                                </PostText>
-                                            </PostInfo>
-                                        </PostInfoWrap>
-                                    </PostFrame>
-                                </Link>
-                            );
-                        })}
+                    {data.data.data.map((post) => {
+                        return (
+                            <Link to={`/details/${post.id}`} key={post.id}>
+                                <PostFrame onClick={(event) => handlePostClick(event, post)}>
+                                    <Photo src={post.postImage} alt="포스트이미지" />
+                                    <PostInfoWrap>
+                                        <PostInfo>
+                                            <PostText className="likes">
+                                                <PostHeartIcon />
+                                                {post.liked}
+                                            </PostText>
+                                            <PostText className="comment">
+                                                <PostCommentIcon />
+                                                {post.commentsCount}
+                                            </PostText>
+                                        </PostInfo>
+                                    </PostInfoWrap>
+                                </PostFrame>
+                            </Link>
+                        );
+                    })}
                 </MainWrap>
             </MainContainer>
-            {showDetails && <DetailsModal image={selectedImage} onClose={() => setShowDetails(false)} />}
+            {showDetails && <DetailsModal post={selectedPost} onClose={() => setShowDetails(false)} />}
         </>
     );
 };
