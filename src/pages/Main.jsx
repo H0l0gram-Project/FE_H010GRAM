@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { IoMdHeart } from "react-icons/io";
 import { FaComment } from "react-icons/fa";
 import DetailsModal from "./DetailsModal";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getPosts } from "../api/post";
 import ErrorStatus from "../components/StatusComponents/ErrorStatus";

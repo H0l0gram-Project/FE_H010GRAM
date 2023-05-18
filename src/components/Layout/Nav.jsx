@@ -35,8 +35,19 @@ const Nav = () => {
         navigate("/");
     };
 
+    // 프로필 사진 없으면 기본 사진으로 나오기
     const profilePhoto = () => {
         console.log(userToken)
+
+        let profilePhoto = '';
+        
+        if(userToken.memberImage) {
+            profilePhoto = `${userToken.memberImage}`
+        }else{
+            profilePhoto = `'/H0l0GRAM_Profile.png'`
+        }
+
+        return profilePhoto;
     }
 
     return (
@@ -70,7 +81,7 @@ const Nav = () => {
                         </MenuHover>
                         <MenuHover to={"/profile"}>
                             <Menu>
-                                <ProfileIcon url={`${process.env.PUBLIC_URL + '/H0l0GRAM_Profile.png'}`} />
+                                <ProfileIcon url={profilePhoto()} />
                                 <span>프로필</span>
                             </Menu>
                         </MenuHover>
