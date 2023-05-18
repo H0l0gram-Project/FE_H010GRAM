@@ -19,6 +19,8 @@ const Main = () => {
         setShowDetails(true);
     };
 
+    console.log("error: " + JSON.stringify(localStorage));
+
     const { isLoading, isError, data } = useQuery("posts", getPosts);
 
     if (isLoading) {
