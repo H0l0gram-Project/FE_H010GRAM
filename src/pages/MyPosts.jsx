@@ -34,7 +34,7 @@ const MyPosts = () => {
         <>
             <MainContainer>
                 <MainWrap>
-                    {data.data.data &&
+                    {(data.data.data || data.data.data === []) ? <NullData> 데이터가 없습니다 😅 </NullData> :
                         data.data.data.map((post) => {
                             return (
                                 <Link to={`/details/${post.id}`} key={post.id}>
@@ -115,3 +115,7 @@ const PostText = styled.span`
 const Photo = styled.img`
     height: 360px;
 `;
+const NullData = styled.div`
+    white-space: nowrap;
+    font-size: 2rem;
+`
