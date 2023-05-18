@@ -12,14 +12,16 @@ import jwtDecode from "jwt-decode";
 
 const Nav = () => {
     const token = Cookies.get("token");
-    const userToken = jwtDecode(token);
-    console.log(userToken)
+    let userToken = "";
+    if (token) {
+        userToken = jwtDecode(token);
+    }
 
     // 모달 창 상태 관리
     const [modalOpen, setModalOpen] = useState(false);
 
     // 로그인 상태를 위한 useState 선언
-    // Cookies.get("token") : 
+    // Cookies.get("token") :
     const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("token"));
 
     const navigate = useNavigate();
@@ -37,8 +39,8 @@ const Nav = () => {
 
     // 프로필 사진 없으면 기본 사진으로 나오기
     const profilePhoto = () => {
-        let profilePhoto = '';
-        
+        let profilePhoto = "";
+
         if(userToken.memberImage) {
             profilePhoto = `${userToken.memberImage}`
         }else{
@@ -46,53 +48,56 @@ const Nav = () => {
         }
 
         return profilePhoto;
-    }
+    };
 
     return (
         <>
             {modalOpen && <PostModalLayout setModalOpen={setModalOpen} />}
-            {isLoggedIn ? (<NavContainer>
-                <div className="logoWrap">
-                    <Link to={"/"}>
-                        <NavLogo src={process.env.PUBLIC_URL + "/H0l0gram_logo.png"} alt="홀로그램 로고" />
-                    </Link>
-                </div>
-                <div className="menuWrap">
-                    <div>
-                        <MenuHover to={"/"}>
-                            <Menu>
-                                <HomeIcon />
-                                <span>홈</span>
-                            </Menu>
-                        </MenuHover>
-                        <MenuHover onClick={modalOpenHandler}>
-                            <Menu>
-                                <WritePostIcon />
-                                <span>만들기</span>
-                            </Menu>
-                        </MenuHover>
-                        <MenuHover to={"/myposts"}>
-                            <Menu>
-                                <ReadPostIcon />
-                                <span>내 포스트</span>
-                            </Menu>
-                        </MenuHover>
-                        <MenuHover to={"/profile"}>
-                            <Menu>
-                                <ProfileIcon url={profilePhoto()} />
-                                <span>프로필</span>
-                            </Menu>
-                        </MenuHover>
-                        <MenuHover onClick={LogoutHandler}>
-                            <Menu>
-                                <LogoutIcon />
-                                <span>로그아웃</span>
-                            </Menu>
-                        </MenuHover>
+            {isLoggedIn ? (
+                <NavContainer>
+                    <div className="logoWrap">
+                        <Link to={"/"}>
+                            <NavLogo src={process.env.PUBLIC_URL + "/H0l0gram_logo.png"} alt="홀로그램 로고" />
+                        </Link>
                     </div>
-                </div>
-            </NavContainer>) : <Header />}
-            
+                    <div className="menuWrap">
+                        <div>
+                            <MenuHover to={"/"}>
+                                <Menu>
+                                    <HomeIcon />
+                                    <span>홈</span>
+                                </Menu>
+                            </MenuHover>
+                            <MenuHover onClick={modalOpenHandler}>
+                                <Menu>
+                                    <WritePostIcon />
+                                    <span>만들기</span>
+                                </Menu>
+                            </MenuHover>
+                            <MenuHover to={"/myposts"}>
+                                <Menu>
+                                    <ReadPostIcon />
+                                    <span>내 포스트</span>
+                                </Menu>
+                            </MenuHover>
+                            <MenuHover to={"/profile"}>
+                                <Menu>
+                                    <ProfileIcon url={profilePhoto()} />
+                                    <span>프로필</span>
+                                </Menu>
+                            </MenuHover>
+                            <MenuHover onClick={LogoutHandler}>
+                                <Menu>
+                                    <LogoutIcon />
+                                    <span>로그아웃</span>
+                                </Menu>
+                            </MenuHover>
+                        </div>
+                    </div>
+                </NavContainer>
+            ) : (
+                <Header />
+            )}
         </>
     );
 };
@@ -133,7 +138,7 @@ const ProfileIcon = styled.span`
     height: 30px;
     border-radius: 50px;
     margin-right: 15px;
-    background-image:url(${(props) => props.url}); 
+    background-image: url(${(props) => props.url});
     background-repeat: no-repeat;
     background-size: cover;
 `;

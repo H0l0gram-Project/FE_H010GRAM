@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 
 const Header = () => {
     // 로그인 상태를 위한 useState 선언
-    // Cookies.get("token") :
+    // Cookies.get("token")
     const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("token"));
 
     return (

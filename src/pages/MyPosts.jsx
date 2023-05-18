@@ -30,12 +30,15 @@ const MyPosts = () => {
         return <ErrorStatus />;
     }
 
+    if (data.data.data.length === 0) {
+        return <NullData>데이터가 없습니다 😅</NullData>;
+    }
+
     return (
         <>
             <MainContainer>
                 <MainWrap>
-                    {( !data.data.data || data.data.data === []) ? <NullData>데이터가 없습니다 😅</NullData> :
-                        data.data.data.map((post) => {
+                    { data.data.data && data.data.data.map((post) => {
                             return (
                                 <Link to={`/details/${post.id}`} key={post.id}>
                                     <PostFrame onClick={() => handlePostClick(post.postImage)}>

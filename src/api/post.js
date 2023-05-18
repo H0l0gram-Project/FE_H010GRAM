@@ -38,7 +38,7 @@ const addPost = async(formData) => {
 // 내 포스트 조회
 const getMyPosts = async () => {
     try{
-        const response = await authApi.get(`${process.env.REACT_APP_SERVER_URL}/api/posts/mypage`);
+        const response = await authApi.get('/api/posts/mypage');
         console.log(response.data);
         return response;
     }catch(err){

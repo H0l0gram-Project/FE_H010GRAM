@@ -1,15 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { IoMdHeart } from "react-icons/io";
 import { FaComment } from "react-icons/fa";
 import DetailsModal from "./DetailsModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getPosts } from "../api/post";
 import ErrorStatus from "../components/StatusComponents/ErrorStatus";
 import LoadingStatus from "../components/StatusComponents/LoadingStatus";
+import Cookies from "js-cookie";
 
 const Main = () => {
+
+    const navigate = useNavigate();
+
+    // ^----- 로그인이 안되어있으면 로그인 페이지로 이동 ----- //
+    // useEffect(() => {
+    //     const token = Cookies.get("token");
+    //     if (!token) {
+    //         navigate("/login");
+    //     }
+    // }, [navigate]);
+
     const [showDetails, setShowDetails] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
