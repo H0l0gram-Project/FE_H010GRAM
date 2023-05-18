@@ -49,6 +49,7 @@ const PostModalLayout = (props) => {
         formData.append("imageFile", imageBlob, 'image.jpg');
         formData.append("postRequestDto", textBlob);
         addPostMutation.mutate(formData);
+        props.setModalOpen(false);
     };
 
     return (
