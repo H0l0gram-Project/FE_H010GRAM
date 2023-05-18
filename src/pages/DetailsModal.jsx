@@ -1,58 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { FaComment, FaPaperPlane, FaBookmark } from "react-icons/fa";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useParams } from "react-router-dom";
+import ReactDOM from 'react-dom';
 
-const DetailsModal = ({ onClose }) => {
+const DetailsModal = ({ post, onClose }) => {
+  const { postId } = useParams();
+  const token = Cookies.get('token');
+
   const [liked, setLiked] = useState(false);
-
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
-
   const [comments, setComments] = useState([
     { username: "user1", text: "Great post!" },
     { username: "user2", text: "Thanks for sharing" },
   ]);
 
+  if (!post) {
+    return null;
+  }
+
   const user = {
+    id: 8,
     username: "user3",
     avatar: process.env.PUBLIC_URL + "/exampleAvatar.jpg", // 실제 이미지 경로로 바꿀 예정
   };
 
+  const toggleLike = () => {
+    setLiked(!liked);
+  };
+
   const handleClickOutside = (e) => {
     if (e.target === e.currentTarget) {
-        onClose();
+      onClose();
     }
   };
 
-  return (
+  return ReactDOM.createPortal(
+    (
     <ModalOverlay>
       <ModalWrap onClick={handleClickOutside}>
         <ModalInner onClick={(e) => e.stopPropagation()}>
           <DetailsContainer>
-            <ImageSection src={process.env.PUBLIC_URL + "/example01.jpg"} />
+            <ImageSection src={post.postImage} />
             <DetailsContent>
-              <UserInformation user={user} />
+              <UserInformation user={user} token={token} />
               <CommentSection>
                 <Comments comments={comments} />
               </CommentSection>
               <Likes />
               <ReactionBar liked={liked} toggleLike={toggleLike} />
-              <CommentInput />
+              <CommentInput postId={postId} token={token} />
             </DetailsContent>
           </DetailsContainer>
         </ModalInner>
       </ModalWrap>
     </ModalOverlay>
+  ),
+  document.body
   );
 };
 
-const UserInformation = ({ user }) => {
+const UserInformation = ({ user, token }) => {
+  const [userInfo, setUserInfo] = useState({ profileImage: '', nickname: '' });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(token)
+        const response = await axios.get(`http://52.79.217.95:8080/api/members/${user.id}`, {
+          headers: { Authorization: token },
+        });
+        if(response.data.message === 'success') {
+          setUserInfo({
+            profileImage: response.data.data.image,
+            nickname: response.data.data.nickname,
+          });
+        } else {
+          console.error('Failed to fetch user data:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    };
+
+    fetchData();
+  }, [user.id, token]);
+
   return (
     <UserInfoContainer>
-      <UserAvatar src={user.avatar} />
-      <Username>{user.username}</Username>
+      <UserAvatar src={userInfo.profileImage || user.avatar} />
+      <Username>{userInfo.nickname}</Username>
     </UserInfoContainer>
   );
 };
@@ -88,17 +127,24 @@ const ReactionBar = ({ liked, toggleLike }) => {
   );
 };
 
-const CommentInput = () => {
+const CommentInput = ({ postId, token }) => {
   const [comment, setComment] = useState("");
 
   const handleChange = (e) => {
     setComment(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 여기서 댓글을 저장 및 처리하십시오.
-    setComment("");
+    try {
+      const response = await axios.post(`/api/posts/${postId}/comments`, { comment }, {
+        headers: { Authorization: token }
+      });
+      console.log(response);
+      setComment("");
+    } catch (error) {
+      console.error('Failed to post comment:', error);
+    }
   };
 
   return (
@@ -108,6 +154,8 @@ const CommentInput = () => {
     </Form>
   );
 };
+
+export default DetailsModal;
 
 const ModalOverlay = styled.div`
   box-sizing: border-box;
@@ -153,12 +201,12 @@ const ModalOverlay = styled.div`
   `;
   
   const ImageSection = styled.img`
-    width: 50%;
-    object-fit: cover;
+    width: 60%;
     height: 100%;
   `;
   
   const DetailsContent = styled.div`
+    width: 40%;
     flex-grow: 1;
     border: 1px solid #dbdbdb;
     border-left: none;
@@ -247,5 +295,3 @@ const ModalOverlay = styled.div`
   display: flex;
   gap: 16px;
 `;
-  
-  export default DetailsModal;

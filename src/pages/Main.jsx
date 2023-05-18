@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { IoMdHeart } from "react-icons/io";
 import { FaComment } from "react-icons/fa";
 import DetailsModal from "./DetailsModal";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getPosts } from "../api/post";
 import ErrorStatus from "../components/StatusComponents/ErrorStatus";
@@ -21,12 +21,10 @@ const Main = () => {
 
     const { isLoading, isError, data } = useQuery("posts", getPosts);
 
-    // console.log(data);
-
     if (isLoading) {
         return <LoadingStatus />;
     }
-    if (isError) {
+    if (isError || !data || !data.data || !data.data.data) {
         return <ErrorStatus />;
     }
 
@@ -58,7 +56,7 @@ const Main = () => {
                         })}
                 </MainWrap>
             </MainContainer>
-            {showDetails && <DetailsModal image={selectedPost} onClose={() => setShowDetails(false)} />}
+            {showDetails && <DetailsModal post={selectedPost} onClose={() => setShowDetails(false)} />}
         </>
     );
 };
