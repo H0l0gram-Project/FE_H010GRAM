@@ -12,16 +12,6 @@ import Cookies from "js-cookie";
 
 const Main = () => {
 
-    const navigate = useNavigate();
-
-    // ^----- 로그인이 안되어있으면 로그인 페이지로 이동 ----- //
-    // useEffect(() => {
-    //     const token = Cookies.get("token");
-    //     if (!token) {
-    //         navigate("/login");
-    //     }
-    // }, [navigate]);
-
     const [showDetails, setShowDetails] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
