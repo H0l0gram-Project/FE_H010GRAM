@@ -10,12 +10,12 @@ import ErrorStatus from "../components/StatusComponents/ErrorStatus";
 import LoadingStatus from "../components/StatusComponents/LoadingStatus";
 
 const Main = () => {
-    const [showDetails, setShowDetails] = useState(false); // Details를 보여줄지 말지를 결정하는 state를 추가
-    const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지를 저장하는 state를 추가
+    const [showDetails, setShowDetails] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
 
-    const handlePostClick = (image) => {
-        // Post를 클릭했을 때의 핸들러를 추가
-        setSelectedImage(image);
+    const handlePostClick = (event, post) => {
+        event.preventDefault();
+        setSelectedPost(post);
         setShowDetails(true);
     };
 
@@ -38,7 +38,7 @@ const Main = () => {
                         data.data.data.map((post) => {
                             return (
                                 <Link to={`/details/${post.id}`} key={post.id}>
-                                    <PostFrame onClick={() => handlePostClick(post.postImage)}>
+                                    <PostFrame onClick={(event) => handlePostClick(event, post)}>
                                         <Photo src={post.postImage} alt="포스트이미지" />
                                         <PostInfoWrap>
                                             <PostInfo>
@@ -58,7 +58,7 @@ const Main = () => {
                         })}
                 </MainWrap>
             </MainContainer>
-            {showDetails && <DetailsModal image={selectedImage} onClose={() => setShowDetails(false)} />}
+            {showDetails && <DetailsModal image={selectedPost} onClose={() => setShowDetails(false)} />}
         </>
     );
 };

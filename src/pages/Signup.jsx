@@ -60,6 +60,7 @@ const Signup = () => {
             password: passwordInput,
             nickname: nicknameInput,
             checkPassword: passwordCheckInput,
+            // memberImage: "{process.env.PUBLIC_URL + '/H0l0GRAM_Profile.png'}",
         };
 
         signUpUser(user);

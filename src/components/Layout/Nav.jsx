@@ -8,8 +8,13 @@ import { FaRegStickyNote } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import Cookies from "js-cookie";
 import Header from "./Header";
+import jwtDecode from "jwt-decode";
 
 const Nav = () => {
+    const token = Cookies.get("token");
+    const userToken = jwtDecode(token);
+    console.log(userToken)
+
     // 모달 창 상태 관리
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -31,7 +36,7 @@ const Nav = () => {
     };
 
     const profilePhoto = () => {
-        
+        console.log(userToken)
     }
 
     return (
@@ -65,7 +70,7 @@ const Nav = () => {
                         </MenuHover>
                         <MenuHover to={"/profile"}>
                             <Menu>
-                                <ProfileIcon />
+                                <ProfileIcon url={`${process.env.PUBLIC_URL + '/H0l0GRAM_Profile.png'}`} />
                                 <span>프로필</span>
                             </Menu>
                         </MenuHover>
@@ -119,10 +124,9 @@ const ProfileIcon = styled.span`
     height: 30px;
     border-radius: 50px;
     margin-right: 15px;
-    background-color: pink;
-    /* background-image:url(${(props) => props.url}); */
-    /* background-repeat: no-repeat; */
-    /* background-size: cover; */
+    background-image:url(${(props) => props.url}); 
+    background-repeat: no-repeat;
+    background-size: cover;
 `;
 const WritePostIcon = styled(BsPlusSquare)`
     display: inline;

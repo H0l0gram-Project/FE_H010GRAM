@@ -2,11 +2,32 @@ import React, { useRef, useState } from "react";
 import { MdOutlinePhotoLibrary } from "react-icons/md";
 import { styled } from "styled-components";
 
-const PostUploadPhotoModal = () => {
-    const [img, setImg] = useState(null);
+const PostUploadPhotoModal = ({ img, setImg }) => {
+    const [imgUrl, setImgUrl] = useState('jpg');
+
+    // input file 클릭 되도록
     const imgInput = useRef();
-    const formData = new FormData();
-    const imgBlob = new Blob([img], { type: "image/jpg" });
+
+    const reader = new FileReader();
+
+    // // 이미지 파일의 확장자 (예: png, jpeg, jpg 등)
+    // let extension = imgUrl?.split(".")[1]; 
+    
+    // // 이미지 종류에 따른 type 반환
+    // switch (extension) {
+    //     case "png":
+    //         extension = "image/png";
+    //         break;
+    //     case "jpeg":
+    //     case "jpg":
+    //         extension = "image/jpeg";
+    //         break;
+    //     default:
+    //         // 기본적으로 jpeg 타입으로 설정
+    //         extension = "image/jpeg";
+    // }
+
+    const imgBlob = new Blob([img], { type: 'image/jpg' });
 
     const clickUploadBtnHandler = () => {
         imgInput.current.click();
@@ -15,6 +36,10 @@ const PostUploadPhotoModal = () => {
     const changeImgFileHandler = (e) => {
         const imgFile = e.target.files[0];
         setImg(imgFile);
+        reader.readAsDataURL(imgFile);
+        reader.onload = () => {
+            setImgUrl(reader.result);
+        };
     };
 
     return (
@@ -24,9 +49,7 @@ const PostUploadPhotoModal = () => {
                     <PreviewBox>
                         <PreviewImg src={URL.createObjectURL(imgBlob)} alt="사용자가 올린 이미지" />
                     </PreviewBox>
-                    <PostBox>
-                        
-                    </PostBox>
+                    <PostBox></PostBox>
                 </Container>
             ) : (
                 <UploadBox>
@@ -47,7 +70,7 @@ const UploadBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: clamp(1px,calc(100vw - 40px),600px);
+    width: clamp(1px, calc(100vw - 40px), 600px);
     aspect-ratio: 1;
 `;
 const Icon = styled(MdOutlinePhotoLibrary)`
@@ -69,7 +92,7 @@ const UploadBtn = styled.button`
 const Container = styled.div`
     display: flex;
     flex-direction: row;
-    width: clamp(1px,calc(100vw - 40px),600px);
+    width: clamp(1px, calc(100vw - 40px), 600px);
     aspect-ratio: 1;
     position: relative;
 `;

@@ -4,9 +4,15 @@ import { IoClose } from "react-icons/io5";
 import { BiArrowBack } from "react-icons/bi";
 import PostPhotoUploadModal from "./PostUploadPhotoModal";
 import PostWriteModal from "./PostWriteModal";
+import { useMutation, useQueryClient } from "react-query";
+import { addPost } from "../api/post";
 
 const PostModalLayout = (props) => {
     const [tab, setTab] = useState(1);
+    const [img, setImg] = useState(null);
+    const [text, setText] = useState('');
+
+    const queryClient = useQueryClient()
 
     const clickPrevBtnHandler = () => {
         setTab(tab - 1);
@@ -24,8 +30,25 @@ const PostModalLayout = (props) => {
         e.stopPropagation();
     };
 
+    const addPostMutation = useMutation(addPost, {
+        onSuccess:() => {
+          queryClient.invalidateQueries("posts")
+        }
+      })
+      
     const submitHandler = () => {
-        
+        const formData = new FormData();
+
+        const data = {
+            content : text
+        }
+
+        const imageBlob = new Blob([img], { type: "image/jpg" });
+        const textBlob = new Blob([JSON.stringify(data)], { type: "application/json"});
+
+        formData.append("imageFile", imageBlob, 'image.jpg');
+        formData.append("postRequestDto", textBlob);
+        addPostMutation.mutate(formData);
     };
 
     return (
@@ -44,9 +67,9 @@ const PostModalLayout = (props) => {
                         {tab >= 1 && tab < 2 ? <Next onClick={clickNextBtnHandler}>다음</Next> : null}
                     </Title>
                     <PageBox>
-                        <PostPhotoUploadModal />
+                        <PostPhotoUploadModal img={img} setImg={setImg} />
                         {/* 모달 두 번째 페이지 */}
-                        {tab === 2 && <PostWriteModal />}
+                        {tab === 2 && <PostWriteModal setText={setText} />}
                         {tab === 2 && <Next onClick={submitHandler}>공유하기</Next>}
                     </PageBox>
                 </ModalInner>
