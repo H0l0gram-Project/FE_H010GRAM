@@ -10,7 +10,6 @@ import ErrorStatus from "../components/StatusComponents/ErrorStatus";
 import LoadingStatus from "../components/StatusComponents/LoadingStatus";
 
 const Main = () => {
-    const navigate = useNavigate();
     const [showDetails, setShowDetails] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
@@ -33,27 +32,28 @@ const Main = () => {
         <>
             <MainContainer>
                 <MainWrap>
-                    {data.data.data.map((post) => {
-                        return (
-                            <Link to={`/details/${post.id}`} key={post.id}>
-                                <PostFrame onClick={(event) => handlePostClick(event, post)}>
-                                    <Photo src={post.postImage} alt="포스트이미지" />
-                                    <PostInfoWrap>
-                                        <PostInfo>
-                                            <PostText className="likes">
-                                                <PostHeartIcon />
-                                                {post.liked}
-                                            </PostText>
-                                            <PostText className="comment">
-                                                <PostCommentIcon />
-                                                {post.commentsCount}
-                                            </PostText>
-                                        </PostInfo>
-                                    </PostInfoWrap>
-                                </PostFrame>
-                            </Link>
-                        );
-                    })}
+                    {data.data.data &&
+                        data.data.data.map((post) => {
+                            return (
+                                <Link to={`/details/${post.id}`} key={post.id}>
+                                    <PostFrame onClick={(event) => handlePostClick(event, post)}>
+                                        <Photo src={post.postImage} alt="포스트이미지" />
+                                        <PostInfoWrap>
+                                            <PostInfo>
+                                                <PostText className="likes">
+                                                    <PostHeartIcon />
+                                                    {post.liked}
+                                                </PostText>
+                                                <PostText className="comment">
+                                                    <PostCommentIcon />
+                                                    {post.commentsCount}
+                                                </PostText>
+                                            </PostInfo>
+                                        </PostInfoWrap>
+                                    </PostFrame>
+                                </Link>
+                            );
+                        })}
                 </MainWrap>
             </MainContainer>
             {showDetails && <DetailsModal post={selectedPost} onClose={() => setShowDetails(false)} />}

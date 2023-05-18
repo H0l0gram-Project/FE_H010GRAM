@@ -1,17 +1,27 @@
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import React from "react";
 import { styled } from "styled-components";
 
-const PostWriteModal = () => {
+const PostWriteModal = ({setText}) => {
+    const token = Cookies.get("token");
+    const userToken = jwtDecode(token);
+    // console.log(userToken)
+
+    const textInputHandler = (e) => {
+        setText(e.target.value);
+    }
+
     return (
         <>
             <PostWrite>
                 <div>
                     <UserInfo>
                         <ProfileImg src={process.env.PUBLIC_URL + "/example02.jpg"} alt="" />
-                        <UserNickname>닉네임</UserNickname>
+                        <UserNickname>{userToken.nickname}</UserNickname>
                     </UserInfo>
                     <TextWrap>
-                        <Text rows={15} placeholder="문구 입력..."></Text>
+                        <Text rows={15} placeholder="문구 입력..." onChange={textInputHandler}></Text>
                     </TextWrap>
                 </div>
             </PostWrite>
@@ -22,7 +32,7 @@ const PostWriteModal = () => {
 export default PostWriteModal;
 
 const PostWrite = styled.div`
-    width: clamp(170px,30%,300px);
+    width: clamp(170px, 30%, 300px);
 `;
 const UserInfo = styled.div`
     display: flex;

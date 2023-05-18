@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { authApi } from "../api/post";
+import axios from "axios";
 
 
 const Login = () => {
@@ -26,7 +27,7 @@ const Login = () => {
     const loginUser = async (user) => {
         try {
             // 서버에 POST요청으로 가입 된 유저가 있는지 확인하는 부분
-            const response = await authApi.post(`${process.env.REACT_APP_SERVER_URL}/api/login`, user);
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/login`, user);
 
             // ^----- 받아온 데이터를 기준으로 Token값을 가공해 브라우저에 저장하는 부분 ----- //
             // 토큰을 양식에 맞게 가공

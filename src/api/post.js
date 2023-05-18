@@ -10,13 +10,13 @@ const authApi = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
     headers: {
         Authorization: `Bearer ${token}`
-          
     },
 });
 
+// 전체 포스트 조회
 const getPosts = async () => {
     try{
-        const response = await authApi.get('/api/posts');
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/posts`);
         console.log(response.data);
         return response;
     }catch(err){
@@ -24,16 +24,27 @@ const getPosts = async () => {
     }
 }
 
-// const addPost = async (inputValue) => {
-//     const token = Cookies.get('token');
-//     const response = await authApi.post(
-//       `${process.env.REACT_APP_SERVER_URL}/api/posts`,
-//       inputValue,
-//       {
-//         headers: { Authorization: `Bearer ${token}` },
-//       }
-//     );
-//   };
+// 포스트 추가
+const addPost = async(formData) => {
+    try{
+        const response = await authApi.post('/api/posts', formData);
+        console.log(response.data);
+        return response;
+    }catch(err){
+        console.log('addPost Error : ', err)
+    }
+}
 
-export { getPosts, authApi };
+// 내 포스트 조회
+const getMyPosts = async () => {
+    try{
+        const response = await authApi.get(`${process.env.REACT_APP_SERVER_URL}/api/posts/mypage`);
+        console.log(response.data);
+        return response;
+    }catch(err){
+        console.log('getPosts Error : ', err)
+    }
+}
+
+export { getPosts, addPost, getMyPosts, authApi };
 
