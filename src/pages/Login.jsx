@@ -34,7 +34,7 @@ const Login = () => {
             const { authorization: tokenOrigin } = response.headers;
             const token = tokenOrigin.replace("Bearer ", "");
             const userToken = jwtDecode(token);
-            const expirationTime = new Date(userToken.exp * 1000);
+            const expirationTime = new Date(userToken.exp * 60 * 1000);
 
             // 위에서 설정한 설정값과 토큰값을 쿠키에 저장
             Cookies.set("token", token, { expires: expirationTime });
