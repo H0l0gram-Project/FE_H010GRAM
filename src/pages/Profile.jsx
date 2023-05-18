@@ -31,7 +31,7 @@ const Profile = () => {
   const token = Cookies.get("token");
   const userToken = jwtDecode(token);
 
-  console.log(userToken)
+  console.log("콘솔", userToken)
 
   const { isLoading, isError, data } = useQuery(`profile${userToken.memberId}`, () =>
   getMyProfile(userToken.memberId),
@@ -78,7 +78,7 @@ const Profile = () => {
         <ProfileSection>
           <LabelContainer>
             <ProfilePicture
-              src={`${userToken.profileImage}`}
+              src={`${userToken.memberImage}`}
               alt="Profile"
             />
             <div>
