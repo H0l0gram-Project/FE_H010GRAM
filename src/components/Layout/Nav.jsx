@@ -37,8 +37,6 @@ const Nav = () => {
 
     // 프로필 사진 없으면 기본 사진으로 나오기
     const profilePhoto = () => {
-        console.log(userToken)
-
         let profilePhoto = '';
         
         if(userToken.memberImage) {
